@@ -1,0 +1,134 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WMS</title>
+    <!--<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href=" {% static 'css_js/bower_components/bootstrap/dist/css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href=" {% static 'css_js/bower_components/font-awesome/css/font-awesome.min.css' %} ">
+    <link rel="stylesheet" href=" {% static 'css_js/dist/css/AdminLTE.min.css' %} ">
+    <link rel="stylesheet" href=" {% static 'css_js/dist/css/skins/_all-skins.min.css' %} ">
+    <link rel="stylesheet" href=" {% static 'css_js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %} ">
+    
+    <script src=" {% static 'css_js/bower_components/jquery/dist/jquery.min.js' %} "></script>
+  <script src=" {% static 'css_js/bower_components/bootstrap/dist/js/bootstrap.min.js' %} "></script>
+  <script src=" {% static 'css_js/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %} "></script>
+  <script src=" {% static 'css_js/screenfull/screenfull.js' %} "></script>
+  <script src=" {% static 'css_js/dist/js/adminlte.min.js' %} "></script>
+  <script src=" {% static 'css_js/bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %} "></script>
+</head>
+<style>
+    .table.table-striped tr th,
+    .floatThead-container table tr th,
+    .floatThead-container colgroup {
+        background: #117a8b;
+        color: #fff;
+    }
+
+    .mytablediv {
+        overflow: scroll;
+        width: 100%;
+    }
+</style>
+
+<body class="hold-transition">
+    <div>
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2"></div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row mb-2">
+                            <div class="col-sm-11">
+                                <div class="callout callout-info" align="center">
+                                    <h3>ASRS Usage Summary Report From 2021-05-24 To 2021-05-24</h3>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="callout callout-info" align="center">
+                                    <button class="btn btn-info" id="btnprint">
+                                        <i class="fa fa-print"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mytablediv">
+                        <div class="" id="div_print">
+                            <h3 align="center" id="printheading" style="display: none;">ASRS Usage Summary Report From
+                                2021-05-24 To 2021-05-24</h3>
+                            <table class="table table-bordered table-striped sticky-enabled">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Date</th>
+                                        <th style="text-align:left;">Shift</th>
+                                        <th style="text-align:center;">Run Time</th>
+                                        <th style="text-align:center;">User Fault</th>
+                                        <th style="text-align:center;">Machine Fault</th>
+                                        <th style="text-align:center;">Total Pallet In</th>
+                                        <th style="text-align:center;">Total Pallet Out</th>
+                                        <th style="text-align:center;">Total Pallet In Out</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;">24-05-2021</td>
+                                        <td style="text-align:left;">1</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">29</td>
+                                        <td style="text-align:center;">43</td>
+                                        <td style="text-align:center;">72</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">24-05-2021</td>
+                                        <td style="text-align:left;">2</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">0</td>
+                                        <td style="text-align:center;">0</td>
+                                        <td style="text-align:center;">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">24-05-2021</td>
+                                        <td style="text-align:left;">3</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">0</td>
+                                        <td style="text-align:center;">0</td>
+                                        <td style="text-align:center;">0</td>
+                                    </tr>
+                                    <tr style="color:green;">
+                                        <td style="text-align:left;" colspan="2"></td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;">00:00:00</td>
+                                        <td style="text-align:center;font-weight: bold;">29</td>
+                                        <td style="text-align:center;font-weight: bold;">43</td>
+                                        <td style="text-align:center;font-weight: bold;">72</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+
+{% endblock %}

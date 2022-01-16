@@ -1,0 +1,522 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<title>WMS</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href=" {% static 'css_js/bower_components/bootstrap/dist/css/bootstrap.min.css' %} ">
+  	<link rel="stylesheet" href=" {% static 'css_js/bower_components/font-awesome/css/font-awesome.min.css' %} ">
+  	<link rel="stylesheet" href=" {% static 'css_js/dist/css/AdminLTE.min.css' %} ">
+  	<link rel="stylesheet" href=" {% static 'css_js/dist/css/skins/_all-skins.min.css' %} ">
+  	<link rel="stylesheet" href=" {% static 'css_js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %} ">
+  	
+  	<script src=" {% static 'css_js/bower_components/jquery/dist/jquery.min.js' %} "></script>
+	<script src=" {% static 'css_js/bower_components/bootstrap/dist/js/bootstrap.min.js' %} "></script>
+	<script src=" {% static 'css_js/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %} "></script>
+	<script src=" {% static 'css_js/screenfull/screenfull.js' %} "></script>
+	<script src=" {% static 'css_js/dist/js/adminlte.min.js' %} "></script>
+	<script src=" {% static 'css_js/bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %} "></script>
+    
+    <link rel="stylesheet" href=" {% static 'css_js/bower_components/select2/dist/css/select2.min.css' %} ">
+    <script src=" {% static 'css_js/bower_components/select2/dist/js/select2.full.min.js' %} "></script>
+
+    <link rel="stylesheet" href=" {% static 'css_js/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %} ">
+    <script src=" {% static 'css_js/bower_components/datatables.net/js/jquery.dataTables.min.js' %} "></script>
+    <script src=" {% static 'css_js/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %} "></script>
+	<style>
+		.error{
+			color: red !important;
+		}
+		.center-navbar{
+			/*text-align: center;*/ 
+			color: white;
+			padding: 11px;
+			font-weight: 700;
+			font-size: 20px;
+		}
+        .modal1 {
+            display: none;
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 10px; /* Location of the box */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            width: 100%;
+            height: 100%;
+            top:0;
+        }
+		@media (max-width:767px){
+			.center-navbar{
+				display: none;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini fixed">
+<div class="wrapper">
+    <header class="main-header">
+        <span class="logo">
+            <span class="logo-mini"><b><i class="fa fa-clock-o"></i></b></span>
+            <span class="logo-lg" style="font-size: 16px;">
+                <i class="fa fa-clock-o"></i> <span id="datebox"></span> <span id="clockbox"></span>
+            </span>
+        </span>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-bell-o live_notifi_icon" style="font-size: 18px;"></i>
+                            <span class="live_notifi_count_sub"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have <span class="live_notifi_count">0</span> notification</li>
+                            <li>
+                                <ul class="menu live_notifi_data">
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src=" {% static 'images/avatar5.png' %} " class="user-image" alt="User Image">
+                            <span class="hidden-xs">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header" style="height: 110px;">
+                                <img src=" {% static 'images/avatar5.png' %} " class="img-circle" alt="User Image">
+                            </li>
+                            <li class="user-footer">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <button class="btn btn-default btn-block btn-flat" id="btn_profile" data-toggle="modal" data-target="#modal-default" title="Profile">
+                                            <i class="fa fa-user"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="/changepassword" class="btn btn-default btn-block btn-flat" title="Change Password"><i class="fa fa-exchange"></i></a>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="#" class="btn btn-default btn-block btn-flat" title="Log out"><i class="fa fa-sign-out"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>	
+                        <a title="Fullscreen" id="toggleFullScreen"><i class="fa fa-arrows-alt"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-custom-menu" style="width: 500px;line-height: 50px;font-weight: 700;font-size: 20px;color: yellow;" id="asrs_mc_status_marquee_data">
+            </div>
+            <div class="center-navbar">WareHouse Management System</div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar" id="mainnav">
+            <div class="user-panel" style="text-align: center;">
+                <div class="image" style="background-color: white;">
+                </div>
+            </div>
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-globe"></i> <span>Master</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/company"><i class="fa fa-circle-o"></i> Company</a></li>
+                        <li><a href="/shifts"><i class="fa fa-circle-o"></i> Shifts</a></li>
+                        <li><a href="/employee"><i class="fa fa-circle-o"></i> User</a></li>
+                        <li><a href="/pallet"><i class="fa fa-circle-o"></i> Pallet</a></li>
+                        <li><a href="/q_status"><i class="fa fa-circle-o"></i> Q Status</a></li>
+                    </ul>
+                </li>
+                <li><a href="/material_inword"><i class="fa fa-database"></i> <span>Material Inward</span></a></li>
+                <li><a href="/material_outword"><i class="fa fa-upload"></i> <span>Material Storage / Retrieval</span></a></li>
+                <li><a href="/material_reload"><i class="fa fa-database"></i> <span>Inward / Reload</span></a></li>
+                <li><a href="/adjustment_reprocess"><i class="fa fa-edit"></i> <span>Adjustment / Re-Process</span></a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-tv"></i> <span>TV</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/pallet_q"><i class="fa fa-circle-o"></i> Pallet Q</a></li>
+                        <li><a href="/screen_storage"><i class="fa fa-circle-o"></i> Storage Details</a></li>
+                    </ul>
+                </li>           
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-book"></i> <span>Reports</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/asrsusageReport"><i class="fa fa-circle-o"></i> ASRS Usage</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content">
+            <div id="employee">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary direct-chat-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">User</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool btn-primary" id="btn_add" style="color: #ffffff;">
+                                        <i class="fa fa-plus"></i> ADD
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                      <div class="col-md-12 table-responsive p-0">
+                                          <table id="dataTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr style="background: #367fa9;color: #ffffff;">
+                                                      <th>Code</th>
+                                                      <th>Name</th>
+                                                      <th>Type</th>
+                                                      <th>Operation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>                       
+                                                    <td>KPR</td>
+                                                    <td>KPR</td>
+                                                    <td>Operator</td>
+                                                    <td>
+                                                        <button title="Edit Employee" class="btn btn-primary btn-flat" id="edit"><i class="fa fa-pencil"></i></button>
+                                                        <button title="Remove Employee" class="btn btn-primary btn-flat" id="remove"><i class="fa fa-remove"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                      <th>Code</th>
+                                                      <th>Name</th>
+                                                      <th>Type</th>
+                                                      <th>Operation</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="employee_dt1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="employee_form" name="employee_form" method="post" class="form-horizontal">
+                            <div class="box box-primary direct-chat-primary">
+                              <div class="box-header with-border">
+                                    <h3 class="box-title">User</h3>
+                              </div>
+                              <div class="box-body">
+                                  <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label for="employee_type" class="col-sm-3 control-label" style="text-align: left;">User Type</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control select2 required" style="width: 100%;" id="employee_type" name="employee_type">
+                                                                <option value="">~~Select~~</option>
+                                                                <option value="Operator">Operator</option>
+                                                                <option value="Supervisor">Supervisor</option>
+                                                                <option value="Mechanical">Mechanical</option>
+                                                                <option value="Electrical">Electrical</option>
+                                                                <option value="Production">Production</option>
+                                                                <option value="Management">Management</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="employee_code" class="col-sm-3 control-label" style="text-align: left;">User Code</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control required" id="employee_code" name="employee_code" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="employee_name" class="col-sm-3 control-label" style="text-align: left;">User Name</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control required" id="employee_name" name="employee_name" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-sm-3 control-label" style="text-align: left;">Email</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="email" name="email" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="mobile_no" class="col-sm-3 control-label" style="text-align: left;">Mobile No</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control numeric" id="mobile_no" name="mobile_no" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="is_login" class="col-sm-3 control-label" style="text-align: left;">Is Login</label>
+                                                        <div class="col-sm-9">                                                            
+                                                            <input type="checkbox" class="minimal" id="is_login" name="is_login">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ip_address_div">
+                                                        <label for="ip_address" class="col-sm-3 control-label" style="text-align: left;">IP Address</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea class="form-control" id="ip_address" name="ip_address" rows="3"> </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-md-12" align="center">
+                                            <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-default" id="btn_cancel">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8"><br />
+                                            <div class="form-group" id="div_success" style="display: none;">
+                                                <div class="alert alert-success">
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    <strong><i class="fa fa-check"></i> Success!</strong> Saved Successfully...
+                                                </div>
+                                            </div>	
+                                            <div class="form-group" id="div_error" style="display: none;">
+                                                <div class="alert alert-danger">
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    <strong><i class="fa fa-close"></i> Error!</strong> <span id="span_err"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer"></footer>
+    <aside class="control-sidebar control-sidebar-dark">
+        <div>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-blue" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Blue</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-blue-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Blue Light</p>
+                </li>
+            </ul>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-black" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Black</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-black-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Black Light</p>
+                </li>
+            </ul>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-purple" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Purple</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-purple-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Purple Light</p>
+                </li>
+            </ul>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-green" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Green</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-green-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Green Light</p>
+                </li>
+            </ul>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-red" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Red</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-red-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Red Light</p>
+                </li>
+            </ul>
+            <ul class='list-unstyled clearfix'>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-yellow" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin">Yellow</p>
+                </li>
+                <li style='float:left; width: 49.999995%; padding: 20px;'>
+                    <a href="javascript:void(0)"data-skin="skin-yellow-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                        <div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                        <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                    </a>
+                    <p class="text-center no-margin" style="font-size: 12px">Yellow Light</p>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Profile</h4>
+            </div>
+            <div class="modal-body" id="modal_profile" style="font-size: 25px;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>    
+</div>
+</body>
+</html>
+<script>
+$(document).ready(function(){
+    $('#employee_dt1').hide();    
+    $('#btn_add').click(function(){
+        $('#employee').hide();
+        $('#employee_dt1').show();
+    });
+    $('#remove').click(function(){
+        alert('Do you want Remove this Employee?');
+    });
+    $('#edit').click(function(){
+        $('#employee').hide();
+        $('#employee_dt1').show();
+    });
+    $("#btn_cancel").on("click",function()
+    {
+        $('#employee').show();
+        $('#employee_dt1').hide();
+    });
+    $('#dataTable').DataTable();
+    $('.select2').select2();
+});
+function GetClock(){
+    d = new Date();
+    nhour  = d.getHours();
+    nmin   = d.getMinutes();
+    nsec   = d.getSeconds();
+    nmonth = new Array("1","2","3","4","5","6","7","8","9","10","11","12");
+    ndate  = d.getDate()+"/"+nmonth[d.getMonth()]+"/"+d.getFullYear();
+
+    if(nhour ==  0) {ap = " AM";nhour = 12;} 
+    else if(nhour <= 11) {ap = " AM";} 
+    else if(nhour == 12) {ap = " PM";} 
+    else if(nhour >= 13) {ap = " PM";nhour -= 12;}
+
+    if(nmin <= 9) {nmin = "0" +nmin;}
+    if(nsec <= 9) {nsec = "0" +nsec;}
+
+    document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+ap+"";
+    document.getElementById('datebox').innerHTML=ndate;
+    setTimeout("GetClock()", 1000);
+}
+window.onload=GetClock;
+
+$('[data-skin]').on('click', function (e) {
+    changeSkin($(this).data('skin'))
+});
+function changeSkin(cls) {
+	var mySkins = [
+        'skin-blue',
+        'skin-black',
+        'skin-red',
+        'skin-yellow',
+        'skin-purple',
+        'skin-green',
+        'skin-blue-light',
+        'skin-black-light',
+        'skin-red-light',
+        'skin-yellow-light',
+        'skin-purple-light',
+        'skin-green-light'
+    ];    
+    $.each(mySkins, function (i) {
+        $('body').removeClass(mySkins[i])
+    });
+    $('body').addClass(cls);
+}
+$('#toggleFullScreen').on('click', function (e) {
+    screenfull.toggle(window.document[0]);
+});
+</script>
+
+{% endblock %}

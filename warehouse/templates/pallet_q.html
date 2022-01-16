@@ -1,0 +1,288 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	<title>Pallet Q</title>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href=" {% static 'css_js/New/bootstrap.min.css' %} ">
+  	<script src=" {% static 'css_js/bower_components/jquery/dist/jquery.min.js' %} "></script>
+  	<script src=" {% static 'css_js/New/bootstrap.min.js' %} "></script>
+  	<script type="text/javascript">
+		function GetClock(){
+			d = new Date();
+			nhour  = d.getHours();
+			nmin   = d.getMinutes();
+			nsec   = d.getSeconds();
+			nmonth = new Array("1","2","3","4","5","6","7","8","9","10","11","12");
+			ndate  = d.getDate()+"/"+nmonth[d.getMonth()]+"/"+d.getFullYear();
+
+			if(nhour ==  0) {ap = " AM";nhour = 12;} 
+			else if(nhour <= 11) {ap = " AM";} 
+			else if(nhour == 12) {ap = " PM";} 
+			else if(nhour >= 13) {ap = " PM";nhour -= 12;}
+
+			if(nmin <= 9) {nmin = "0" +nmin;}
+			if(nsec <= 9) {nsec = "0" +nsec;}
+
+			document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+ap+"";
+			document.getElementById('datebox').innerHTML=ndate;
+			//setTimeout("GetClock()", 1000);
+		}
+		//window.onload=GetClock;
+	</script>
+  	<style>
+	    /* Remove the navbar's default margin-bottom and rounded borders */ 
+	    .navbar {
+	      margin-bottom: 0;
+	      border-radius: 0;
+	    }
+	    .navbar-nav.navbar-center {
+	    	position: absolute;
+	    	left: 50%;
+	    	transform: translatex(-50%);
+		}
+		.pane-border{
+			border: none;
+		}
+		.pane-head-bg{
+			background-color: rgba(68, 70, 79, 0.5);
+			border-color: transparent !important;
+			font-size: 25px;
+			font-weight: bolder;
+			margin-top: 10px;
+			border-radius: 3px !important;
+			color: greenyellow !important;
+		}
+		.pane-bg{
+			background-color: rgba(68, 70, 79, 0.5);
+			font-size: 25px;
+			font-weight: bolder;
+			margin-top: 10px;
+			border-radius: 3px !important;
+		}
+		.fontcolor
+		{
+			color:	greenyellow;
+			background: transparent;
+		}
+		.fontbig
+		{
+  			font-size: 50px;
+			font-weight: bolder;
+			text-align: center;
+		}
+		#btn_save{
+			margin-left: 40px;
+			display: inline-block;
+		  	padding: 15px 25px;
+		  	font-size: 24px;
+		  	cursor: pointer;
+		  	text-align: center;
+		  	text-decoration: none;
+		  	outline: none;
+		  	color: #fff;
+		  	background-color:#0D0DFF ;
+		 	border: none;
+		  	border-radius: 15px;
+		  	box-shadow: 0 5px #0d3094;
+		}
+		#btn_save:active{
+			background-color: #3e8e41;
+	  		box-shadow: 0 5px #666;
+	  		transform: translateY(4px);
+		}
+		.table-bordered-black{
+			border: 1px solid #000000;
+		}
+		.table-bordered-black1{
+			border: 1px solid #ffffff;
+		}
+		.pallet_q_main_bg{
+			background: linear-gradient(to bottom, #87CEFA 0%, #ffffff 100%);
+			font-size: 42px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.pallet_q_sub_bg{
+			background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);
+			font-size: 90px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.pallet_q_sub_bg_font{
+			font-size: 90px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.pallet_q_data1_bg{
+			background: linear-gradient(to bottom, #008000 5%, #ffffff 100%);
+		}
+		.pallet_q_data1_bg1{
+			color: #ffffff;
+			background: linear-gradient(to bottom, #380a96 0%, #0b0a0d 100%); 
+		}
+		.pallet_q_data1_bg_font{
+			font-size: 90px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.pallet_q_data2_bg{
+			background: linear-gradient(to bottom, #ff1717 5%, #ffffff 100%);
+		}
+		.pallet_q_data2_bg_font{
+			font-size: 90px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.pallet_q_data3_bg{
+			background: linear-gradient(to bottom, #008000 5%, #ffffff 100%);
+		}
+		.pallet_q_data3_bg_font{
+			font-size: 60px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.process_q_item_bg_font{
+			background: linear-gradient(to bottom, #87CEFA 0%, #ffffff 100%);
+			font-size: 32px;
+			font-weight: bolder;
+			vertical-align: middle !important;
+		}
+		.fontbign
+		{
+  			font-size: 300px;
+			font-weight: bolder;
+			text-align: center;
+		}
+		.text3d1 {
+			color: #ffffff;
+		    text-shadow: 0px 3px 0px #b2a98f,
+                 0px 14px 10px rgba(0,0,0,0.15),
+                 0px 24px 2px rgba(0,0,0,0.1),
+                 0px 34px 30px rgba(0,0,0,0.1);
+		}
+		.text_shadow {
+		    text-shadow: 1px 1px 1px #919191,
+		        1px 2px 1px #919191,
+		        1px 3px 1px #919191,
+		        1px 4px 1px #919191,
+		        1px 5px 1px #919191,
+		        1px 6px 1px #919191,
+		        1px 7px 1px #919191,
+		        1px 8px 1px #919191,
+		        1px 9px 1px #919191,
+		        1px 10px 1px #919191,
+		    1px 18px 6px rgba(16,16,16,0.4),
+		    1px 22px 10px rgba(16,16,16,0.2),
+		    1px 25px 35px rgba(16,16,16,0.2),
+		    1px 30px 60px rgba(16,16,16,0.4);
+		}
+  	</style>
+</head>
+<body style="background-color: #24262d;">
+
+<nav class="navbar navbar-inverse" style="background-color: #ffffff;">
+  	<div class="container-fluid">
+    	<div class="navbar-header">
+      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>                        
+      		</button>
+      		<a class="navbar-brand fontcolor" href="/header" style="padding: 7px 15px;">COMPANY</a>
+    	</div>
+    	<div class="collapse navbar-collapse" id="myNavbar">
+     		<ul class="nav navbar-nav navbar-center">
+            	<li><a href="#" style="font-size: 45px;color: #000000;font-weight: bolder;">Q LISTS</a></li>
+        	</ul>
+      		<ul class="nav navbar-nav navbar-right">
+        		<li><a href="javascript:void(0)"id="datebox" style="font-size: 25px;color: #000000;"></a></li>
+        		<li><a href="javascript:void(0)"id="clockbox" style="font-size: 25px;color: #000000;"></a></li>
+      		</ul>
+    	</div>
+  	</div>
+</nav>
+
+<div class="container-fluid bg-3 text-center">
+  	<div class="row">
+  		<div class="col-sm-8 text-left lighting" style="line-height: 50px;font-weight: 700;font-size: 20px;color: yellow;" id="asrs_mc_status_marquee_data"><br /></div>
+  		<div class="col-sm-4 text-right lighting" style="line-height: 50px;font-weight: 700;font-size: 20px;color: yellow;" id="nocomm"><br /></div>
+  		<div class="col-sm-12 table-responsive">
+  			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="5000">
+			    <div class="carousel-inner">
+			      	<div class="item active">
+			  			<table class="table table-bordered-black" id="pallet_q_div">
+			  				<thead>
+							<tr>
+								<th class="pallet_q_main_bg table-bordered-black text-center" style="width: 10%;">S No.</th>
+								<th class="pallet_q_main_bg table-bordered-black text-center" style="width: 25%;">PALLET ID</th>
+								<th class="pallet_q_main_bg table-bordered-black text-center" style="width: 30%;">IN / OUT</th>
+								<th class="pallet_q_main_bg table-bordered-black text-center" style="width: 35%;">STATUS</th>
+							</tr>
+							</thead>
+							<tbody>
+                                <tr>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">1</td>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">6434</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data1_bg_font table-bordered-black">IN</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data2_bg_font table-bordered-black">QUEUING</td>
+                                </tr>
+                                <tr>
+                                    <td class="pallet_q_data2_bg pallet_q_sub_bg_font table-bordered-black">2</td>
+                                    <td class="pallet_q_data2_bg pallet_q_sub_bg_font table-bordered-black">6526</td>
+                                    <td class="pallet_q_data2_bg pallet_q_data1_bg_font table-bordered-black">OUT</td>
+                                    <td class="pallet_q_data2_bg pallet_q_data2_bg_font table-bordered-black"></td>
+                                </tr>
+                                <tr>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">3</td>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">6747</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data1_bg_font table-bordered-black">IN</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data2_bg_font table-bordered-black">PROCESSING</td>
+                                </tr>
+                                <tr>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">4</td>
+                                    <td class="pallet_q_data1_bg pallet_q_sub_bg_font table-bordered-black">6002</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data1_bg_font table-bordered-black">IN</td>
+                                    <td class="pallet_q_data1_bg pallet_q_data2_bg_font table-bordered-black">QUEUING</td>
+                                </tr>
+							</tbody>
+			      		</table>
+					</div>
+					<div class="item" id="process_q_item_hide">
+						<table class="table table-bordered-black" id="process_q_item">
+			  				<thead>
+							<tr>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 10%;">S No.</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 25%;">GRN</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 25%;">FABRICNAME</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 25%;">Color</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 25%;">BATCHNO</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 25%;">ROLLSNO</th>
+								<th class="process_q_item_bg_font table-bordered-black text-center" style="width: 35%;">QUANTITY</th>
+							</tr>
+							</thead>
+							<tbody>
+                                <tr>
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);"> 1 </td>	
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">26189</td>
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">LYCRA JERSEY F/S (O/W)</td>
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">SKY CAPTAIN F/S(O/W)</td>
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">12109408</td>
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">11</td>	
+                                    <td class="process_q_item_bg_font table-bordered-black" style="background: linear-gradient(to bottom, #808080 25%, #ffffff 100%);">405.00</td>
+                                </tr>
+							</tbody>
+			      		</table>
+					</div>
+				</div>
+			</div>
+  		</div>
+  	</div>
+</div>
+</body>
+</html>
+
+{% endblock %}
