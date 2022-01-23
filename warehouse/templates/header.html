@@ -97,14 +97,14 @@
                                         <a href="/changepassword" class="btn btn-default btn-block btn-flat" title="Change Password"><i class="fa fa-exchange"></i></a>
                                     </div>
                                     <div class="col-xs-4">
-                                        <a href="signout" class="btn btn-default btn-block btn-flat" title="Log out"><i class="fa fa-sign-out"></i></a>
+                                        <a action='logout' href="/signout" class="btn btn-default btn-block btn-flat" title="Log out"><i class="fa fa-sign-out"></i></a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </li>
                     <li>	
-                        <a title="Fullscreen" id="toggleFullScreen"><i class="fa fa-arrows-alt"></i></a>
+                        <a id="toggleFullScreen"><i class="fa fa-arrows-alt"></i></a>
                     </li>
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -338,9 +338,17 @@ function changeSkin(cls) {
     });
     $('body').addClass(cls);
 }
-$('#toggleFullScreen').on('click', function (e) {
-	screenfull.toggle(window.document[0]);
-});
+
+var toggleFullScreen = document.getElementById("toggleFullScreen")
+var el = document.documentElement;
+
+toggleFullScreen.addEventListener("click",()=>{
+    if(el.requestFullscreen){
+        el.requestFullscreen()
+    }
+})
+
+
 </script>
 
 {% endblock %}

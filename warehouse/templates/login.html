@@ -400,10 +400,6 @@
     </style>
   </head>
   <body>
-    {% if error %}
-    <p style="color: red">{{error}}</p>
-    {% endif %}
-
     <div id="login-button" style="display: block">
       <img src="{% static 'images/login-w-icon.png' %}" />
     </div>
@@ -411,7 +407,7 @@
       id="container"
       style="display: none; transform: matrix(0, 0, 0, 0, 0, 0); left: 0px"
     >
-      <form id="login_form" method="post">
+      <form id="login_form" action="." method="post">
         {% csrf_token %}
         <h1 id="litheader">Log In</h1>
         <span class="close-btn">
@@ -444,6 +440,11 @@
         </p>
       </form>
     </div>
+    <div>
+      {% for message in messages %}
+        <h3>{{message}}</h3>
+      {% endfor %}
+    </div>
   </body>
   <script>
     $(document).ready(function () {
@@ -465,10 +466,6 @@
         $("#container, #forgotten-container").fadeOut(800, function () {
           $("#login-button").fadeIn(800);
         });
-      });
-
-      $("#go").click(function () {
-        window.location.href = "header";
       });
     });
   </script>

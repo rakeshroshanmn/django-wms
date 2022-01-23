@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 
     'management',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,7 @@ MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'management/Static/images')
 
-
 LOGIN_REDIRECT_URL = 'header'
+LOGOUT_REDIRECT_URL = 'signin'
 
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'signin'
