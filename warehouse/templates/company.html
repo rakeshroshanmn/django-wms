@@ -97,7 +97,7 @@
                                         </button>
                                     </div>
                                     <div class="col-xs-4">
-                                        <a href="/changepassword" class="btn btn-default btn-block btn-flat" title="Change Password"><i class="fa fa-exchange"></i></a>
+                                        <a href="changepassword" class="btn btn-default btn-block btn-flat" title="Change Password"><i class="fa fa-exchange"></i></a>
                                     </div>
                                     <div class="col-xs-4">
                                         <a action='logout' href="/signout" class="btn btn-default btn-block btn-flat" title="Log out"><i class="fa fa-sign-out"></i></a>
@@ -219,6 +219,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form id="company_form" name="company_form" method="post" class="form-horizontal">
+                            {% csrf_token %}
                             <div class="box box-primary direct-chat-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Company</h3>
@@ -463,9 +464,16 @@ function changeSkin(cls) {
     });
     $('body').addClass(cls);
 }
-$('#toggleFullScreen').on('click', function (e) {
-    screenfull.toggle(window.document[0]);
-});
+
+var toggleFullScreen = document.getElementById("toggleFullScreen")
+var el = document.documentElement;
+
+toggleFullScreen.addEventListener("click",()=>{
+    if(el.requestFullscreen){
+        el.requestFullscreen()
+    }
+})
+
 </script>
 
 {% endblock %}

@@ -106,7 +106,7 @@
                                             </button>
                                         </div>
                                         <div class="col-xs-4">
-                                            <a href="/changepassword" class="btn btn-default btn-block btn-flat"
+                                            <a href="changepassword" class="btn btn-default btn-block btn-flat"
                                                 title="Change Password"><i class="fa fa-exchange"></i></a>
                                         </div>
                                         <div class="col-xs-4">
@@ -203,6 +203,7 @@
                             </div>
                             <form id="asrsusage_form" name="asrsusage_form" method="post" class="form-horizontal"
                                 target="_blank">
+                                {% csrf_token %}
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -499,9 +500,16 @@
             });
             $('body').addClass(cls);
         }      
-        $('#toggleFullScreen').on('click', function (e) {
-            screenfull.toggle(window.document[0]);
-        });
+
+        var toggleFullScreen = document.getElementById("toggleFullScreen")
+        var el = document.documentElement;
+        
+        toggleFullScreen.addEventListener("click",()=>{
+            if(el.requestFullscreen){
+                el.requestFullscreen()
+            }
+        })
+        
         $('.select2').select2();
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
